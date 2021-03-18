@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+ 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="assets/css/main.css" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+</head>
+ 
+<body class="text-center" style="background-color:black" >
+  <form class="form-signin nes-container" style="background-color: grey" >
+    <!-- <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1> -->
+    <a class="btn btn-lg btn-primary btn-block nes-btn" onClick="javascript:WebSocketInterview()">Get random object</a>
+  </form>
+  <script>
+         function WebSocketInterview() { 
+
+            var socket = new WebSocket("wss://u7duk1sj07.execute-api.us-east-1.amazonaws.com/interview");
+            var msg = {
+              type: "action",
+              text: "onMessage"
+              }
+
+            socket.onopen = function() {
+                  
+                  socket.send(msg);
+                  alert("[open] Connection established");
+                  alert("Asking for a random Dynamodb object ");
+                  };
+
+            socket.onmessage = function (evt) { 
+                  alert(`[message] Data received from server: ${evt.data}`);
+                  };
+
+            socket.onclose = function() {                
+                  alert("[close] Connection died"); 
+               };
+         }
+
+  </script>
+</body>
+ 
+</html>
